@@ -182,7 +182,7 @@ Types `Msg` and `Model` are defined in `Types.elm`. The `view` function is facto
 function is in `Aleaiacta.elm`. However, the logic that updates the board is factored out in `Board.elm`. File 
 `SavedNameList.elm` is an example of separating what one could think of as a "component", because it defines the model,
 the view function and the update function for the list of saved games. However, because of the strongly-typed nature of
-Elm, it is not possible to achieve complete separation, as the type of the model and the message should be reflected to
+Elm, it is not possible to achieve complete separation, as the type of the model and the message should be reflected in
 the model and message of the whole program. One might think of it as a necessary boilerplate or as a nuisance, but it is
 an integral part of what Elm is.
 
