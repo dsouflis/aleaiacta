@@ -186,6 +186,39 @@ Elm, it is not possible to achieve complete separation, as the type of the model
 the model and message of the whole program. One might think of it as a necessary boilerplate or as a nuisance, but it is
 an integral part of what Elm is.
 
+Here's how the "component" types are embedded inside the "top-level" types, and the corresponding functions are used.
+
+```elm
+type Msg =
+  Click Int Int
+...
+  | SavedNameListMsg SavedNameList.Msg
+...
+
+type alias Model =
+  { sz : Int
+...
+  , savedNameListModel : SavedNameList.Model
+...
+  }
+
+update : Msg -> Model -> (Model, Cmd Msg)
+update msg model =
+  case msg of
+  Click i j ->
+...
+  SavedNameListMsg (SavedNameList.LoadName name) ->
+    (model, localStorageLoadState name)
+...
+  SavedNameListMsg subMsg ->
+    let
+      (updatedSavedNameListModel, savedNameListCmd) = SavedNameList.update subMsg model.savedNameListModel
+    in
+      ({ model | savedNameListModel = updatedSavedNameListModel }, Cmd.map SavedNameListMsg savedNameListCmd )
+
+
+```
+
 ## Happy Elming!
 I encourage you to study the code and even download, run it and try modifying it in small or big ways. It does not seem
 possible that Elm will conquer the world, but it is still something that will give ideas and help you avoid the tunnel
