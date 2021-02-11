@@ -125,6 +125,55 @@ main =
   }
 ```
 
+Elm is a strongly-typed language and, because it does not provide higher-kind polymorphism, its typechecker can do type
+inferencing on its own, probably with no exceptions. However, it is considered good practice to write type annotations
+for top-level functions. As you can see, main is using the `Browser.element` helper, whose type is
+
+```elm
+element :
+    { init : flags -> ( model, Cmd msg )
+    , view : model -> Html msg
+    , update : msg -> model -> ( model, Cmd msg )
+    , subscriptions : model -> Sub msg
+    }
+    -> Program flags model msg
+```
+
+Few comments on Elm: the argument to `element` is defined structurally, so you see that it is not mandatory to name
+everything with a specific name. The return value of the function type of the `init` field, is a tuple, denoted simply
+by parentheses. And the function type of `update` has... two arrows, which may seem weird for people already using types in
+Flow or TypeScript. This is because all functions in Elm are curried. So `update` can be thought of as a function taking
+an argument (of generic kind) and returning a function taking an argument (again of generic type) and returning a value
+of type `( model, Cmd msg )`, a tuple. Because juxtaposition in Elm means function application, one can write an
+expression returning a function, followed by a number of expressions, and think of it as applying the function to some
+arguments.
+
+*Aleaiacta* defines the following type for its flags:
+
+```elm
+type alias Flags =
+  { sz : Int
+  , seed : Int
+  , goalScore : Int
+  , goalChains : Int
+  , now : Int
+  , names: List String
+  }
+```
+
+Which is computed as follows inside the script in `aleaiacta.html` that initializes Elm.
+
+```javascript
+const flags = {
+  sz: 5,
+  seed: Math.floor(Math.random()*0xFFFFFFFF),
+  goalScore: 200,
+  goalChains: 20,
+  now: Date.now(),
+  names: Object.keys(getState())
+};
+```
+
 [screenshot]: ./screenshot.jpg
 [elm and not elm]: ./ElmAndNonElm.png
 [haskell]: https://www.haskell.org/
