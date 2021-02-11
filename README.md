@@ -78,6 +78,28 @@ program does by sending a message to an outgoing "port"), and allows the middlew
 Saga (which, the Elm program receives from the outside JavaScript by means of an incoming "port"). I'll show how ports
 look like when we get to the code walkthrough.
 
+### Render, update, repeat if necessary
+The Elm Architecture will be very familiar to users of React/Redux, and this is no coincidence, since Elm was one of the
+inspirations for Redux. Even though Dan Abramov states he never actually ran Elm, the description of the
+Elm Architecture was one of the ideas Redux was based upon, as shown in the README.
+
+While React/Redux fits inside a regular JavaScript program and the user is responsible for all the plumbing necessary,
+a user of Elm gives the Elm runtime three things (at first approximation): an initial value of what is called a "model",
+a way to render (view) a model, and a way to update the
+model based on messages. One would be very justified to make a direct connection...
+
+| from | to |
+| ---- | ---|
+| model | Redux state |
+| view function | React render |
+| message | Redux action |
+| update function | Redux reducer |
+
+Like in Redux, the model is never updated in-place, the update function just returns the value that will replace the
+previous value of the model but, unlike Redux, this is not simply encouraged; it's mandatory and cannot, in fact, happen
+in any other way, because there's no mutation in the Elm language. That's right. No assignment of any kind, and no way
+to change values. One can only compute new values based on old ones.
+
 [screenshot]: ./screenshot.jpg
 [elm and not elm]: ./ElmAndNonElm.png
 [haskell]: https://www.haskell.org/
