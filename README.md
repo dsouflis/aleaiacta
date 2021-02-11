@@ -62,6 +62,18 @@ It is not in my scope for this document to provide a tutorial on Elm, but I will
 Understanding the Elm Architecture does not really necessitate understanding the minutiae of Elm, the language, and this
 is especially true for programmers familiar with React, even more so for users of React/Redux. Bear with me for a while.
 
+### Elm and not-Elm
+It is possible to write a useful Elm program completely in Elm, because the Elm Architecture takes care of managing its
+piece of the DOM itself. However, to conceptualize the interaction of an Elm program inside the bigger context, it is
+useful to understand it as an entity whose actual purpose is to talk to its outside context.
+
+![Elm and not-Elm][elm and not elm]
+
+The dashed arrows are built-in interop, which happens automatically by virtue of writing and executing Elm. The solid
+arrows are explicit interop that one can declare in Elm, via the concept of "ports", and implement on "the other side",
+in JavaScript. In *Aleaiacta* this is used to interact with Local Storage and with the browser window.
+
 [screenshot]: ./screenshot.jpg
+[elm and not elm]: ./ElmAndNonElm.png
 [haskell]: https://www.haskell.org/
 [purescript]: https://www.purescript.org/
