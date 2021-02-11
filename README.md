@@ -72,8 +72,14 @@ useful to understand it as an entity whose actual purpose is to talk to its outs
 The dashed arrows are built-in interop, which happens automatically by virtue of writing and executing Elm. The solid
 arrows are explicit interop that one can declare in Elm, via the concept of "ports", and implement on "the other side",
 in JavaScript. In *Aleaiacta* this is used to interact with Local Storage and with the browser window.
+This clean separation of side-effecting and non-side-effecting code reminds one of how [Redux Sagas][redux sagas] are 
+written: yielding an effect from inside a Saga, gives control to the Saga middleware to enable outside code to run (which, an Elm 
+program does by sending a message to an outgoing "port"), and allows the middleware to communicate a value back to the 
+Saga (which, the Elm program receives from the outside JavaScript by means of an incoming "port"). I'll show how ports
+look like when we get to the code walkthrough.
 
 [screenshot]: ./screenshot.jpg
 [elm and not elm]: ./ElmAndNonElm.png
 [haskell]: https://www.haskell.org/
 [purescript]: https://www.purescript.org/
+[redux sagas]: https://redux-saga.js.org/
