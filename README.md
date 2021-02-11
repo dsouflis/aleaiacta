@@ -53,6 +53,10 @@ usual strategy is to form long chains, so that more new tiles are pushed to the 
 different-colored high-valued tiles might actually drive one's score _lower_! Because the chain (except the last tile)
 will be replaced by new tiles that might have _less_ total value! So, there is a strategic element involved in playing.
 
+One can save a game in order to go back to it at a separate time, and can delete all saved games. Adding more functionality
+to the save/load logic, e.g. allowing one to name the games and to update a game or delete an individual game, is one of
+the "extension points" I have left in the program for ambitious Elm programmers!
+
 ## The Elm Architecture
 Elm is a completely non-mainstream programming language for the Web. It is not a general-purpose language, even though
 it borrows concepts and syntax from other languages like [Haskell][haskell] and [PureScript][purescript], which are.
@@ -174,8 +178,26 @@ const flags = {
 };
 ```
 
+Types `Msg` and `Model` are defined in `Types.elm`. The `view` function is factored out in `View.elm`, but the `update`
+function is in `Aleaiacta.elm`. However, the logic that updates the board is factored out in `Board.elm`. File 
+`SavedNameList.elm` is an example of separating what one could think of as a "component", because it defines the model,
+the view function and the update function for the list of saved games. However, because of the strongly-typed nature of
+Elm, it is not possible to achieve complete separation, as the type of the model and the message should be reflected to
+the model and message of the whole program. One might think of it as a necessary boilerplate or as a nuisance, but it is
+an integral part of what Elm is.
+
+## Happy Elming!
+I encourage you to study the code and even download, run it and try modifying it in small or big ways. It does not seem
+possible that Elm will conquer the world, but it is still something that will give ideas and help you avoid the tunnel
+vision one can get when only doing one thing and never exposing oneself to new ideas. The Web ecosystem is always 
+evolving and, even if Elm is not something that will catch the mainstream's attention, new languages still come about,
+like [ReScript][rescript] that are halfway between JavaScript and Elm.
+
+Happy Elming!
+
 [screenshot]: ./screenshot.jpg
 [elm and not elm]: ./ElmAndNonElm.png
 [haskell]: https://www.haskell.org/
 [purescript]: https://www.purescript.org/
 [redux sagas]: https://redux-saga.js.org/
+[rescript]: https://rescript-lang.org/
