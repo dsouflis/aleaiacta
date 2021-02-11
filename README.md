@@ -100,6 +100,31 @@ previous value of the model but, unlike Redux, this is not simply encouraged; it
 in any other way, because there's no mutation in the Elm language. That's right. No assignment of any kind, and no way
 to change values. One can only compute new values based on old ones.
 
+### Some additional details
+At first approximation, that's what the Elm Architecture is about. But to understand a real Elm program, one must go one
+level deeper. The user does not actually give the initial value of the model to Elm, one gives a function to compute the
+initial model, and an initial _command_, from any runtime flags that were used to initialize the program. So this is an
+initial interaction from the not-Elm world to the Elm world. The update function, also does not just compute a new 
+model, it computes a new model and a _command_. And one gives one more function, that computes a list of _subscriptions_
+from the model. _Commands_ and _Subscriptions_ are what flow through outgoing and incoming ports. And that is not all, 
+because there are even more elaborate ways to initialize an Elm program, but I'll stick to this one because this is what
+*Aleaiacta* uses.
+
+## Finally, the code
+The entry point of *Aleaiacta* is function `main` in `Aleaiacta.elm`. Function `main` is always the entrypoint of an Elm 
+program, and it is defined as
+
+```elm
+main : Program Flags Model Msg
+main =
+  Browser.element
+  { init = init
+  , view = view
+  , update = update
+  , subscriptions = subscriptions
+  }
+```
+
 [screenshot]: ./screenshot.jpg
 [elm and not elm]: ./ElmAndNonElm.png
 [haskell]: https://www.haskell.org/
