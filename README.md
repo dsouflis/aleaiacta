@@ -82,6 +82,33 @@ program does by sending a message to an outgoing "port"), and allows the middlew
 Saga (which, the Elm program receives from the outside JavaScript by means of an incoming "port"). I'll show how ports
 look like when we get to the code walkthrough.
 
+### Virtual DOM
+Elm, like React and most other frameworks, operates on a virtual DOM. It is supposed to be blazing fast, even though, 
+unlike React, no one has to obsess over adding keys to help with matching.
+
+![TodoMVC Benchmark][virtualdombench]
+
+React has JSX to help with constructing it, but Elm does not have a text-based syntax, instead expecting you to use a
+library of constructor functions, which feels like using `React.createElement` directly. This is how an *H1* is created
+in _Aleaiacta_.
+
+```elm
+    h1 [] [
+        text (promptText model)
+        , text " "
+        , span [
+                        style "font-size" "20px"
+                        , style "border-style" "solid"
+                        , style "width" "fit-content"
+                        , style "margin" "auto"
+                        , style "border-color" "#0F9D58"
+                        ] (renderDirectionCounter model.directionCounter)
+    ]
+```
+
+This looks quite Spartan, and it is, but there are some libraries for styled components that abstract a little on top of
+the basics.
+
 ### Render, update, repeat if necessary
 The Elm Architecture will be very familiar to users of React/Redux, and this is no coincidence, since Elm was one of the
 inspirations for Redux. Even though Dan Abramov states he never actually ran Elm, the description of the
@@ -234,3 +261,4 @@ Happy Elming!
 [purescript]: https://www.purescript.org/
 [redux sagas]: https://redux-saga.js.org/
 [rescript]: https://rescript-lang.org/
+[virtualdombench]: https://elm-lang.org/assets/blog/virtual-dom-charts-old/sampleResults.png
