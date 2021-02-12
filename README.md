@@ -246,6 +246,29 @@ update msg model =
 
 ```
 
+## Use inside React
+Directory `react-app` has a minimal react program that contains a component embedding _Aleaiacta_. You install it as
+usual with `npm install` and run it with `npm start`. This takes care of copying CSS, images and the compiled program to
+the React `public` directory before running. As of this writing, the code that is produced by the Elm compiler is not 
+acceptable to webpack, so I include it directly in `index.html`.
+
+The game is embedded in component `AleaiactaComp`. This component takes initialization flags as props.
+
+```jsx
+        <AleaiactaComp
+          sz={5}
+          seed={Math.floor(Math.random()*0xFFFFFFFF)}
+          goalScore={150}
+          goalChains={15}
+        />
+```
+
+Because it needs the `Elm` global, this is referenced via `window`.
+
+```javascript
+const Elm = window.Elm;
+```
+
 ## Happy Elming!
 I encourage you to study the code and even download, run it and try modifying it in small or big ways. It does not seem
 possible that Elm will conquer the world, but it is still something that will give ideas and help you avoid the tunnel
