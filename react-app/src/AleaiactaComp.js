@@ -1,14 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Elm = window.Elm;
-
-const stateKey = 'aleaiacta';
-
-const getState = () => {
-  const savedString = localStorage.getItem(stateKey) || "{}";
-  const saved = JSON.parse(savedString);
-  return saved;
-};
 
 export default ({
   sz = 4,
@@ -16,6 +8,9 @@ export default ({
   goalScore = 100,
   goalChains = 10,
 }) => {
+  const [saved, setSaved] = useState({});
+  const [toggle, setToggle] = useState(true);
+
   useEffect(() => {
     const flags = {
       sz,
@@ -23,14 +18,27 @@ export default ({
       goalScore,
       goalChains,
       now: Date.now(),
-      names: Object.keys(getState())
+      names: Object.keys(saved),
     };
 
     const aleaiacta = Elm.Aleaiacta.init({
-      node: document.getElementById("elm-area"),
+      node: document.getElementById("elm-area-parent").lastChild,
       flags
     });
-  }, []);
 
-  return <div id="elm-area">Aleaiacta</div>;
+    aleaiacta.ports.localStorageSaveState.subscribe((namedState) => {
+      saved[namedState.name] = namedState.model;
+      setSaved(saved);
+    });
+
+    aleaiacta.ports.localStorageLoadState.subscribe((name) => {
+      const model = saved[name];
+      aleaiacta.ports.localStorageLoadStateResp.send(model);
+    });
+
+    aleaiacta.ports.reload.subscribe(() => setToggle(x => !x));
+
+  }, [toggle]);
+
+  return <div id="elm-area-parent"><div/></div>;
 }

@@ -269,6 +269,9 @@ Because it needs the `Elm` global, this is referenced via `window`.
 const Elm = window.Elm;
 ```
 
+The component implements all ports needed by _Aleaiacta_ with its own internal state instead of the browser's
+localStorage.
+
 ## Happy Elming!
 I encourage you to study the code and even download, run it and try modifying it in small or big ways. It does not seem
 possible that Elm will conquer the world, but it is still something that will give ideas and help you avoid the tunnel
