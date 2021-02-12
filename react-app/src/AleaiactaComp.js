@@ -9,7 +9,6 @@ export default ({
   goalChains = 10,
 }) => {
   const [saved, setSaved] = useState({});
-  const [toggle, setToggle] = useState(true);
 
   useEffect(() => {
     const flags = {
@@ -36,9 +35,8 @@ export default ({
       aleaiacta.ports.localStorageLoadStateResp.send(model);
     });
 
-    aleaiacta.ports.reload.subscribe(() => setToggle(x => !x));
-
-  }, [toggle]);
+    aleaiacta.ports.reload.subscribe(() => window.location.reload());
+  }, []);
 
   return <div id="elm-area-parent"><div/></div>;
 }
