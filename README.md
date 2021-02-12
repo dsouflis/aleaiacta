@@ -97,12 +97,12 @@ in _Aleaiacta_.
         text (promptText model)
         , text " "
         , span [
-                        style "font-size" "20px"
-                        , style "border-style" "solid"
-                        , style "width" "fit-content"
-                        , style "margin" "auto"
-                        , style "border-color" "#0F9D58"
-                        ] (renderDirectionCounter model.directionCounter)
+            style "font-size" "20px"
+            , style "border-style" "solid"
+            , style "width" "fit-content"
+            , style "margin" "auto"
+            , style "border-color" "#0F9D58"
+        ] (renderDirectionCounter model.directionCounter)
     ]
 ```
 
